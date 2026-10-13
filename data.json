@@ -102,8 +102,8 @@
     "ko": [
      "문창시장 근처 주차장이에요 🅿️",
      "{{parking_now}}",
-     "① 문창시장 공영주차장(제1) — 중구 대전천서로 279, 시장에서 약 30m, 58면\n   무인 24시간 운영\n   요금 부과: 평일 08:00~20:00 · 토 08:00~14:00 (그 외 시간 무료)\n   일요일·공휴일: 무료\n   10분 150원(추가 10분당 150원), 1일 최대 6,500원, 월 72,000원",
-     "② 문창시장 제2공영주차장 — 중구 문창로18번길 13, 무인 24시간 운영\n   요금 부과 시간은 제1주차장과 같아요\n   1일 최대 2,400원 (10분당 요금: 준비 중)\n   전기차 급속충전기 1기(DC콤보)",
+     "① 문창시장 공영주차장(제1) — 중구 대전천서로 279, 시장에서 약 30m, 58면\n   무인 24시간 운영\n   요금 부과: 평일 08:00~20:00 · 토 08:00~14:00 (그 외 시간 무료)\n   일요일·공휴일: 무료\n   1일 최대 6,500원, 월정기 72,000원",
+     "② 문창시장 제2공영주차장 — 중구 문창로18번길 13, 무인 24시간 운영\n   요금 부과 시간은 제1주차장과 같아요\n   1일 최대 2,400원\n   전기차 급속충전기 1기(DC콤보)",
      "③ 대전천서로 도로변 무료 노상주차장 — 무료",
      "④ 대전천 둔치 천변주차장 — 제1주차장 입구 바로 맞은편 둔치. 무료",
      "※ 주차할인권: 1시간 무료 (점포 이용 시 받으세요)",
@@ -112,8 +112,8 @@
     "en": [
      "Parking near Munchang Market 🅿️",
      "{{parking_now}}",
-     "① Public Parking Lot 1 — 279 Daejeoncheonseo-ro, ~30 m, 58 spaces\n   Unattended, open 24 h\n   Fees charged: weekdays 08:00–20:00 · Sat 08:00–14:00 (free outside these hours)\n   Sundays & public holidays: free\n   ₩150 per 10 min, max ₩6,500/day",
-     "② Public Parking Lot 2 — 13 Munchang-ro 18beon-gil, unattended 24 h, same fee hours\n   Max ₩2,400/day (10-min rate: coming soon), 1 EV fast charger",
+     "① Public Parking Lot 1 — 279 Daejeoncheonseo-ro, ~30 m, 58 spaces\n   Unattended, open 24 h\n   Fees charged: weekdays 08:00–20:00 · Sat 08:00–14:00 (free outside these hours)\n   Sundays & public holidays: free\n   Max ₩6,500/day, monthly pass ₩72,000",
+     "② Public Parking Lot 2 — 13 Munchang-ro 18beon-gil, unattended 24 h, same fee hours\n   Max ₩2,400/day, 1 EV fast charger",
      "③ Free roadside parking along Daejeoncheonseo-ro",
      "④ Daejeoncheon riverside lot — on the stream bank right across from Lot 1's entrance. Free",
      "Parking voucher: 1 hour free (ask at the shop)",
