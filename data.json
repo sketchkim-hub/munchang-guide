@@ -402,15 +402,15 @@
     "ko": [
      "택배 접수·대전 당일 무료배송 📦 (운영자 서비스)",
      "🚚 대전지역 당일 무료배송 — 출발 하루 두 번, 오전 9시 · 오후 1시\n{{next_departure}}",
-     "📦 택배 접수 요금\n  2kg 이하 4,000원\n  5kg 이하 5,000원\n  10kg 이하 6,000원",
-     "접수 위치 · 출발편별 접수 마감 · 택배사 · 포장 기준 · 10kg 초과 · 해외 배송: 준비 중",
+     "📦 택배 접수 요금\n  2kg 이하 4,000원\n  5kg 이하 5,000원\n  10kg 이하 6,000원\n⏰ 시외 택배 접수 마감: 오후 1시",
+     "접수 위치 · 당일배송 출발편별 접수 마감 · 택배사 · 포장 기준 · 10kg 초과 · 해외 배송: 준비 중",
      "문의: 상인회 042-272-8903 (운영자 연락처: 준비 중)"
     ],
     "en": [
      "Parcel & same-day delivery 📦 (operator's service)",
      "🚚 Free same-day delivery within Daejeon — departures 9:00 AM and 1:00 PM\n{{next_departure}}",
-     "📦 Parcels: up to 2 kg ₩4,000 · up to 5 kg ₩5,000 · up to 10 kg ₩6,000",
-     "Drop-off location, cut-off times, courier: coming soon"
+     "📦 Parcels: up to 2 kg ₩4,000 · up to 5 kg ₩5,000 · up to 10 kg ₩6,000\n⏰ Out-of-town parcel cut-off: 1:00 PM",
+     "Drop-off location, same-day delivery cut-offs, courier: coming soon"
     ]
    },
    "buttons": [
