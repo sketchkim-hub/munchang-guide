@@ -1,0 +1,15 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#8a3b12"><link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>문창시장 안내 도우미 (비공식)</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header><div class="ttl"><b id="appName">문창시장 안내 도우미</b><span class="badge" id="badge">비공식</span></div>
+<div class="langs"><button data-lang="ko" class="on">KO</button><button data-lang="en">EN</button><button data-lang="zh">中文</button><button data-lang="ja">日本語</button></div></header>
+<nav class="tabs"><button id="tabChat" class="on">💬 <span>안내</span></button><button id="tabTl">📜 <span>연표</span></button></nav>
+<main id="chat" aria-live="polite"></main>
+<section id="tl" hidden></section>
+<div id="quick"></div>
+<form id="ask"><input id="q" autocomplete="off" placeholder="궁금한 걸 적어 주세요 (예: 주차)"><button>보내기</button></form>
+<footer id="disc"></footer>
+<script src="app.js"></script></body></html>

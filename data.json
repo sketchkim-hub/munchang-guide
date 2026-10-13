@@ -1,0 +1,713 @@
+{
+ "_readme": "편집 방법은 README.md 참고",
+ "meta": {
+  "name": "문창시장 안내 도우미",
+  "name_en": "Munchang Market Helper (unofficial)",
+  "address": "대전광역시 중구 보문로20번길 22 (문창동)",
+  "address_en": "22 Bomun-ro 20beon-gil, Jung-gu, Daejeon",
+  "phone": "042-272-8903",
+  "operator": "Jsquare(개인사업자)",
+  "last_checked": "준비 중",
+  "map_url": "https://map.kakao.com/?q=%EB%8C%80%EC%A0%84%20%EC%A4%91%EA%B5%AC%20%EB%B3%B4%EB%AC%B8%EB%A1%9C20%EB%B2%88%EA%B8%B8%2022"
+ },
+ "greeting": {
+  "ko": "안녕하세요! 1967년부터 이어 온 대전 문창전통시장 방문을 돕는 비공식 안내 도우미예요. 아래 버튼을 누르거나 궁금한 걸 적어 주세요.",
+  "en": "Hi! I'm the Munchang Market Helper, an unofficial guide to Munchang Traditional Market (since 1967) in Jung-gu, Daejeon. Tap a button or type a question.",
+  "zh": "中文版本：准备中",
+  "ja": "日本語版：準備中"
+ },
+ "disclaimer": {
+  "ko": "이 서비스는 문창시장상인회의 공식 서비스가 아니며, 지역 개인사업자(Jsquare)가 운영하는 비공식 안내 도우미입니다. 안내 정보는 최종 확인일 기준이며 바뀔 수 있으니, 중요한 내용은 상인회(042-272-8903)나 각 점포에 확인해 주세요.",
+  "en": "This is an unofficial guide run by a local business (Jsquare), not an official service of the Munchang Market Merchants' Association. Information may change; please confirm important details with the shop or the association (+82-42-272-8903)."
+ },
+ "fallback": {
+  "ko": "그 질문은 아직 준비 중이에요. 아래 메뉴를 눌러 보시거나 상인회(042-272-8903)에 문의해 주세요.",
+  "en": "Sorry, that's not ready yet. Try the menu below or call the association (+82-42-272-8903)."
+ },
+ "parking_lot": {
+  "name": {
+   "ko": "문창시장 공영주차장",
+   "en": "Public Parking Lot 1"
+  },
+  "hours": {
+   "1": [
+    "09:00",
+    "18:00"
+   ],
+   "2": [
+    "09:00",
+    "18:00"
+   ],
+   "3": [
+    "09:00",
+    "18:00"
+   ],
+   "4": [
+    "09:00",
+    "18:00"
+   ],
+   "5": [
+    "09:00",
+    "18:00"
+   ],
+   "6": [
+    "09:00",
+    "14:00"
+   ]
+  },
+  "holiday_closed": true,
+  "alt": {
+   "ko": "문창동 제3노상(무료·24시간)",
+   "en": "On-street Lot 3 (free, 24 h)"
+  }
+ },
+ "delivery": {
+  "departures": [
+   "09:00",
+   "13:00"
+  ],
+  "timezone": "Asia/Seoul"
+ },
+ "parcel_rates": [
+  {
+   "max_kg": 2,
+   "price": 4000
+  },
+  {
+   "max_kg": 5,
+   "price": 5000
+  },
+  {
+   "max_kg": 10,
+   "price": 6000
+  }
+ ],
+ "items": [
+  {
+   "id": "parking",
+   "icon": "🅿️",
+   "label": {
+    "ko": "주차장 안내",
+    "en": "Parking"
+   },
+   "keywords": [
+    "주차",
+    "주차장",
+    "차",
+    "parking",
+    "park",
+    "car"
+   ],
+   "answer": {
+    "ko": [
+     "문창시장 근처 주차장이에요 🅿️",
+     "{{parking_now}}",
+     "① 문창시장 공영주차장(제1) — 중구 대전천서로 279, 시장에서 약 30m, 58면\n   평일 09:00~18:00 · 토 09:00~14:00 · 공휴일 미운영\n   10분 150원(추가 10분당 150원), 1일 최대 6,500원, 월 72,000원",
+     "② 문창시장 제2공영주차장 — 중구 문창로18번길 13, 09:00~18:00, 유료(요금: 준비 중), 전기차 급속충전기 1기(DC콤보)",
+     "③ 문창동 제3노상 — 약 92m, 230면, 무료·24시간\n④ 문창동 제8노상 — 약 80m, 8면, 무료·24시간",
+     "※ 할인: \"최초 30분 무료, 점포 주차할인권 제시 시 할인\" — 상인회 확인 필요",
+     "⚠️ 주차 정보는 대부분 민간 집계 사이트(장똘망·블루스퀘어·전기차충전소찾기) 자료예요. 공식 요금표 확인 필요.",
+     "최종 확인일: 준비 중"
+    ],
+    "en": [
+     "Parking near Munchang Market 🅿️",
+     "{{parking_now}}",
+     "① Munchang Market Public Parking Lot 1 — 279 Daejeoncheonseo-ro, ~30 m, 58 spaces\n   Weekdays 09:00–18:00 · Sat 09:00–14:00 · Closed on public holidays\n   ₩150 per 10 min, max ₩6,500/day",
+     "② Public Parking Lot 2 — 13 Munchang-ro 18beon-gil, 09:00–18:00, paid (rates: coming soon), 1 EV fast charger",
+     "③ Munchang-dong On-street Lot 3 — ~92 m, 230 spaces, free, 24 h\n④ On-street Lot 8 — ~80 m, 8 spaces, free, 24 h",
+     "⚠️ Mostly from third-party sites — to be confirmed with official sources."
+    ]
+   },
+   "buttons": [
+    "map",
+    "facilities"
+   ],
+   "quick": true
+  },
+  {
+   "id": "facilities",
+   "icon": "🚻",
+   "label": {
+    "ko": "편의시설",
+    "en": "Facilities"
+   },
+   "keywords": [
+    "화장실",
+    "편의",
+    "atm",
+    "고객센터",
+    "보관함",
+    "카트",
+    "놀이방",
+    "온누리",
+    "상품권",
+    "toilet",
+    "restroom",
+    "facilit"
+   ],
+   "answer": {
+    "ko": [
+     "편의시설 안내 🚻",
+     "• 화장실: 공중화장실·주차장 있음(소진공 데이터). 주차장 개방화장실(약 5m, 24시간, 장애인 화장실), 시장 개방화장실(약 99m, 24시간) — 위치·사진 확인 필요",
+     "• 천장 아케이드가 있어 눈·비 걱정 없이 장보기 가능",
+     "• 물품보관함·카트·유아놀이방·고객안내센터·고객휴게실·자전거보관소: 제3자 사이트 자료 — 현장 확인 필요",
+     "• ATM 위치: 준비 중\n• 고객센터 위치·운영시간: 준비 중\n• 온누리상품권 가맹 점포 목록: 준비 중",
+     "• 영업시간: 중구청 07:00~21:00 표기 / 관광공사 \"점포별로 다름\" — 확인 필요"
+    ],
+    "en": [
+     "Facilities 🚻",
+     "• Public restrooms and parking: available (open data). Exact locations: to be confirmed.",
+     "• Covered arcade — shop in rain or snow.",
+     "• Lockers, carts, kids' room, customer center: third-party info, to be confirmed.",
+     "• ATM: coming soon",
+     "• Hours: 07:00–21:00 per Jung-gu Office; varies by shop."
+    ]
+   },
+   "buttons": [
+    "parcel",
+    "parking"
+   ],
+   "quick": true
+  },
+  {
+   "id": "food",
+   "icon": "🍡",
+   "label": {
+    "ko": "먹거리",
+    "en": "Food"
+   },
+   "keywords": [
+    "먹거리",
+    "먹을",
+    "맛집",
+    "떡",
+    "음식",
+    "칼국수",
+    "감자전",
+    "족발",
+    "food",
+    "eat",
+    "tteok",
+    "rice cake"
+   ],
+   "answer": {
+    "ko": [
+     "문창시장은 떡으로 유명한 시장이에요 🍡 한때 대전에서 거래되던 떡의 60%를 만들었다고 해요. (출처: 문화저널 맥, 『대전문화』 제30호 364쪽)",
+     "언급된 먹거리: 감자전, 칼국수(팥칼국수 포함), 족발, 추어탕, 닭강정, 찐빵·도너츠, 열무국수",
+     "점포별 안내(점포명·메뉴·가격·위치): 준비 중 — 동의한 점포만 소개해요.",
+     "떡집·방앗간이 여러 곳 있어요."
+    ],
+    "en": [
+     "Munchang Market is famous for tteok (Korean rice cakes) 🍡 It once produced about 60% of the rice cakes sold in Daejeon.",
+     "Dishes mentioned: potato pancake, kalguksu noodles (incl. red-bean), jokbal, loach soup, sweet fried chicken, steamed buns & donuts, yeolmu noodles.",
+     "Shop-by-shop guide: coming soon (only shops that consent)."
+    ]
+   },
+   "buttons": [
+    "baram",
+    "story"
+   ],
+   "quick": true
+  },
+  {
+   "id": "nearby",
+   "icon": "🗺️",
+   "label": {
+    "ko": "주변 볼거리",
+    "en": "Nearby"
+   },
+   "keywords": [
+    "주변",
+    "볼거리",
+    "관광",
+    "가볼",
+    "볼파크",
+    "야구",
+    "보문산",
+    "오월드",
+    "뿌리공원",
+    "대전천",
+    "nearby",
+    "sight",
+    "ballpark"
+   ],
+   "answer": {
+    "ko": [
+     "주변 둘러볼 곳 🗺️",
+     "• 대전천 — 보문교·인창교·문창교로 이어지는 천변 산책",
+     "• 대전한화생명볼파크 — 중구 대종로 373, 2025년 3월 개장, 한화 이글스 홈구장",
+     "• 보문산 큰나무 전망대 — 대사동 산1-65, 화~일 09:00~21:00, 월요일 휴무, 입장 무료(블로그 기준)",
+     "• 보문산성 — 대전광역시 기념물, 야외음악당에서 약 1km 산길",
+     "• 대전오월드 · 뿌리공원 — 가족 나들이",
+     "이동 시간·추천 코스: 준비 중"
+    ],
+    "en": [
+     "Nearby 🗺️",
+     "• Daejeoncheon stream walk",
+     "• Daejeon Hanwha Life Ballpark — 373 Daejong-ro, opened Mar 2025, home of Hanwha Eagles",
+     "• Bomunsan Big Tree Observatory — Tue–Sun 09:00–21:00, closed Mon, free (per blog)",
+     "• Bomunsanseong Fortress, O-World, Ppuri Park",
+     "Travel times & routes: coming soon"
+    ]
+   },
+   "buttons": [
+    "map"
+   ],
+   "quick": true
+  },
+  {
+   "id": "story",
+   "icon": "📜",
+   "label": {
+    "ko": "시장 이야기·연표",
+    "en": "Market story"
+   },
+   "keywords": [
+    "이야기",
+    "역사",
+    "연표",
+    "조선",
+    "유래",
+    "어떻게",
+    "생겼",
+    "장터",
+    "서정장",
+    "뚝방",
+    "history",
+    "story",
+    "joseon",
+    "old"
+   ],
+   "answer": {
+    "ko": [
+     "문창시장은 어떻게 생겼을까요? 📜",
+     "조선시대 이 일대에 장터가 있었다고 전한다. 옛 문헌에 \"그 당시 장이 섰던 자리라 하여 장터라 불렀다고 한다\", \"현재 보문교부근에 있는이곳이 장터라고 하는 이유는 조선조때 이곳에 장터가있었기 때문이다\"라는 기록이 있어요.\n(출처: 『대전 중구 문창동 역사유래 이야기』, 대전중구문화원, 1997, 1·2쪽)",
+     "참고: 『1872년 지방지도』에는 근처 산내면 대전리에 2·7일장 '대전장'이 기록돼 있어요(같은 장소라는 근거는 아님). (출처: 김효경, 『대전문화』 제30호, 336쪽 각주2)",
+     "그 뒤 일제강점기 서정(西町)의 1·6일장 '서정장' → 해방 뒤 대전천 제방의 '뚝방시장(땔감시장)' → 방화도로(지금의 문창로) 주변 난전 → 1967년 '문창시장' 개설. 2005년 현대식 문창시장이 문을 열었어요.\n(출처: 김효경, 『대전문화』 제30호, 355–363쪽)"
+    ],
+    "en": [
+     "How did the market begin? 📜",
+     "According to local records, there is said to have been a marketplace (jangteo) in this area, near today's Bomun Bridge, during the Joseon era. A local history book notes the spot \"was called Jangteo because a market was held there.\"\n(Source: 『대전 중구 문창동 역사유래 이야기』, Daejeon Jung-gu Cultural Center, 1997, pp.1–2)",
+     "An 1872 map also records a nearby market, \"Daejeon-jang,\" held on days ending in 2 and 7. (『대전문화』 No.30, p.336 note 2)",
+     "Later: Seojeong-jang market (Japanese colonial era) → 'Ttukbang' embankment market → Munchang Market officially opened in 1967; modern market from 2005. (『대전문화』 No.30, pp.355–363)"
+    ]
+   },
+   "buttons": [
+    "timeline",
+    "baram",
+    "tteok",
+    "yeot"
+   ],
+   "quick": true
+  },
+  {
+   "id": "archive",
+   "icon": "🏛️",
+   "label": {
+    "ko": "디지털 역사관",
+    "en": "Digital archive"
+   },
+   "keywords": [
+    "역사관",
+    "아카이브",
+    "사진",
+    "구술",
+    "archive",
+    "museum",
+    "photo"
+   ],
+   "answer": {
+    "ko": [
+     "디지털 역사관 🏛️ (준비 중)",
+     "• 연표: 지금 볼 수 있어요 → [연표] 버튼",
+     "• 사진관·문서관·옛 지명 지도·구술사: 준비 중 — 문헌 속 사진·지도는 원 소장처의 이용 허락을 받은 뒤에 공개해요.",
+     "• 옛 사진을 갖고 계신가요? 기증 안내: 준비 중"
+    ],
+    "en": [
+     "Digital archive 🏛️ (coming soon)",
+     "• Timeline: available now",
+     "• Photos, documents, old maps, oral history: coming soon (published only after permission from rights holders)."
+    ]
+   },
+   "buttons": [
+    "timeline"
+   ],
+   "quick": true
+  },
+  {
+   "id": "foreign",
+   "icon": "🌐",
+   "label": {
+    "ko": "외국인 안내",
+    "en": "Foreign visitors"
+   },
+   "keywords": [
+    "외국",
+    "foreign",
+    "english",
+    "영어",
+    "중국어",
+    "일본어",
+    "pay",
+    "결제",
+    "help",
+    "1330",
+    "vegetarian",
+    "halal",
+    "채식",
+    "할랄"
+   ],
+   "answer": {
+    "ko": [
+     "Foreign visitors 🌐 — 아래 'EN' 버튼으로 영어 화면을 볼 수 있어요. 中文 / 日本語: 준비 중",
+     "• 영문 주소: 22 Bomun-ro 20beon-gil, Jung-gu, Daejeon",
+     "• 관광 통역 도움: 한국관광공사 1330 (해외 +82-2-1330)",
+     "• 결제·식이 정보(할랄·채식): 준비 중 — 점포 자기 신고 정보이며 인증이 아님"
+    ],
+    "en": [
+     "Welcome! 🌐 Munchang Traditional Market (since 1967), Jung-gu, Daejeon.",
+     "• Address: 22 Bomun-ro 20beon-gil, Jung-gu, Daejeon",
+     "• Payment methods differ by shop: coming soon. Nearest ATM: coming soon.",
+     "• Vegetarian/halal info will be self-reported by shops and is NOT a certification (coming soon). Many broths use anchovy — show staff: \"고기나 멸치 육수 없이 되나요?\" (Can it be made without meat or anchovy broth?)",
+     "• Need help by phone? KTO 1330 Travel Helpline (English, Japanese, Chinese): dial 1330 in Korea, +82-2-1330 from abroad.",
+     "• 中文 / 日本語: coming soon"
+    ]
+   },
+   "buttons": [
+    "food",
+    "parcel"
+   ],
+   "quick": true
+  },
+  {
+   "id": "parcel",
+   "icon": "📦",
+   "label": {
+    "ko": "택배·배달",
+    "en": "Parcel & delivery"
+   },
+   "keywords": [
+    "택배",
+    "배달",
+    "배송",
+    "보내",
+    "부치",
+    "무료배송",
+    "parcel",
+    "deliver",
+    "ship",
+    "send"
+   ],
+   "answer": {
+    "ko": [
+     "택배 접수·대전 당일 무료배송 📦 (운영자 서비스)",
+     "🚚 대전지역 당일 무료배송 — 출발 하루 두 번, 오전 9시 · 오후 1시\n{{next_departure}}",
+     "📦 택배 접수 요금\n  2kg 이하 4,000원\n  5kg 이하 5,000원\n  10kg 이하 6,000원",
+     "접수 위치 · 출발편별 접수 마감 · 택배사 · 포장 기준 · 10kg 초과 · 해외 배송: 준비 중",
+     "문의: 상인회 042-272-8903 (운영자 연락처: 준비 중)"
+    ],
+    "en": [
+     "Parcel & same-day delivery 📦 (operator's service)",
+     "🚚 Free same-day delivery within Daejeon — departures 9:00 AM and 1:00 PM\n{{next_departure}}",
+     "📦 Parcels: up to 2 kg ₩4,000 · up to 5 kg ₩5,000 · up to 10 kg ₩6,000",
+     "Drop-off location, cut-off times, courier: coming soon"
+    ]
+   },
+   "buttons": [
+    "contact"
+   ],
+   "quick": true
+  },
+  {
+   "id": "contact",
+   "icon": "💬",
+   "label": {
+    "ko": "직접 문의",
+    "en": "Contact"
+   },
+   "keywords": [
+    "문의",
+    "전화",
+    "연락",
+    "상인회",
+    "contact",
+    "call",
+    "phone"
+   ],
+   "answer": {
+    "ko": [
+     "직접 문의 💬",
+     "문창시장상인회 ☎ 042-272-8903",
+     "주소: 대전광역시 중구 보문로20번길 22 (문창동)",
+     "※ 이 도우미는 상인회 공식 서비스가 아니에요. 정보 오류 제보 방법: 준비 중"
+    ],
+    "en": [
+     "Contact 💬",
+     "Munchang Market Merchants' Association ☎ +82-42-272-8903",
+     "Address: 22 Bomun-ro 20beon-gil, Jung-gu, Daejeon",
+     "This helper is unofficial. For phone help in English, call 1330."
+    ]
+   },
+   "buttons": [
+    "map"
+   ],
+   "quick": true
+  },
+  {
+   "id": "baram",
+   "icon": "🍡",
+   "label": {
+    "ko": "바람떡 이야기",
+    "en": "Baram-tteok"
+   },
+   "keywords": [
+    "바람떡",
+    "공장떡",
+    "baram"
+   ],
+   "answer": {
+    "ko": [
+     "바람떡 이야기 🍡",
+     "떡 반죽을 얇게 밀어 앙금을 넣고 반으로 접은 뒤 밥그릇으로 찍어 만들어요. 찍을 때 공기가 들어가 불룩해져서 '바람떡'이래요. 다른 지역 방앗간에서는 안 만들어서 '공장떡'이라고도 불렸어요.\n(출처: 월간 대전, 『대전문화』 제30호 366쪽)"
+    ],
+    "en": [
+     "Baram-tteok 🍡",
+     "Thin dough filled with sweet bean paste, folded and pressed with a rice bowl — air gets trapped and it puffs up, hence 'baram' (wind). It was the market's signature rice cake."
+    ]
+   },
+   "buttons": [
+    "tteok",
+    "story"
+   ],
+   "quick": false
+  },
+  {
+   "id": "tteok",
+   "icon": "🏭",
+   "label": {
+    "ko": "떡 도매 이야기",
+    "en": "Tteok wholesale"
+   },
+   "keywords": [
+    "도매",
+    "방앗간"
+   ],
+   "answer": {
+    "ko": [
+     "떡 도매 이야기 🏭",
+     "1970년대 초 문창동 떡 도매집은 4곳 → 8곳 → 14곳으로 늘었어요. 1975년 한 떡집이 방앗간을 열고 떡을 만들기 시작한 것이 떡 도매의 시작점이었다고 해요(한 떡집 사장님의 구술). 1981년 무렵 문창·석교·옥계동 일대 떡집·방앗간은 38곳이었고, 2000년대 초 뷔페와 떡 공장이 퍼지며 줄었어요. 떡을 대야에 이고 김천·황간·청주·보은 등 5일장으로 행상을 나가기도 했어요.\n(출처: 김효경, 『대전문화』 제30호, 357–368쪽)"
+    ],
+    "en": [
+     "Tteok wholesale 🏭",
+     "From 4 to 14 rice-cake wholesalers in the early 1970s, about 38 shops and mills around 1981; declined in the 2000s. (『대전문화』 No.30, pp.357–368)"
+    ]
+   },
+   "buttons": [
+    "baram",
+    "timeline"
+   ],
+   "quick": false
+  },
+  {
+   "id": "yeot",
+   "icon": "🍬",
+   "label": {
+    "ko": "엿방과 엿장수",
+    "en": "Yeot taffy"
+   },
+   "keywords": [
+    "엿",
+    "엿장수",
+    "엿방"
+   ],
+   "answer": {
+    "ko": [
+     "엿방과 엿장수 🍬",
+     "1960~1990년대 문창동은 떡과 엿을 행상에게 공급하는 수공업 도매지였어요. '엿방'은 5~6명이 일하는 곳, '엿집'은 엿장수 기숙사였고, \"엿 한 판 값만 있으면 엿장수 할 수 있다\"는 말이 있었대요.\n(출처: 김효경, 『대전문화』 제30호, 368–371쪽)",
+     "※ '문창동 엿장수놀이'는 전설·구전이에요(『대전 중구 문창동 역사유래 이야기』 3–5쪽)."
+    ],
+    "en": [
+     "Yeot (taffy) 🍬",
+     "From the 1960s to the 1990s, Munchang-dong supplied rice cakes and yeot taffy to peddlers. (『대전문화』 No.30, pp.368–371)"
+    ]
+   },
+   "buttons": [
+    "story"
+   ],
+   "quick": false
+  }
+ ],
+ "timeline": [
+  {
+   "year": "백제 / 신라",
+   "text": {
+    "ko": "우술군 / 비풍군에 속함",
+    "en": "Part of Usul-gun (Baekje) / Bipung-gun (Silla)"
+   },
+   "source": "문헌1 p.1",
+   "disputed": false
+  },
+  {
+   "year": "조선",
+   "text": {
+    "ko": "공주목 산내면에 속함. 조선시대 이 일대에 장터가 있었다고 전한다.",
+    "en": "Part of Sannae-myeon, Gongju. A marketplace is said to have existed in this area during the Joseon era."
+   },
+   "source": "문헌1 p.1·2 (보조: 문헌2 p.336 각주2)",
+   "disputed": false
+  },
+  {
+   "year": "1868",
+   "text": {
+    "ko": "회덕군 산내면으로 바뀜 (중구청은 '고종 32년'으로 표기)",
+    "en": "Became Sannae-myeon, Hoedeok-gun"
+   },
+   "source": "문헌1 p.1",
+   "disputed": true
+  },
+  {
+   "year": "일제강점기",
+   "text": {
+    "ko": "서정장(1·6일장, 난전) — 문창시장의 전신",
+    "en": "Seojeong-jang (5-day market) — predecessor of the market"
+   },
+   "source": "문헌2 p.355–356",
+   "disputed": false
+  },
+  {
+   "year": "1931",
+   "text": {
+    "ko": "대전군 대전읍 서정(西町)",
+    "en": "Seojeong, Daejeon-eup"
+   },
+   "source": "문헌2 p.336",
+   "disputed": false
+  },
+  {
+   "year": "1946",
+   "text": {
+    "ko": "'문창동'으로 이름을 바꿈",
+    "en": "Renamed Munchang-dong"
+   },
+   "source": "문헌1 p.1, 문헌2 p.336",
+   "disputed": false
+  },
+  {
+   "year": "해방~1960년대",
+   "text": {
+    "ko": "대전천 제방의 뚝방시장(땔감시장)",
+    "en": "'Ttukbang' embankment (firewood) market"
+   },
+   "source": "문헌2 p.359",
+   "disputed": false
+  },
+  {
+   "year": "1955",
+   "text": {
+    "ko": "대전 최초 재건주택 일부(오동촌), 문창초등학교 개교",
+    "en": "First reconstruction housing; Munchang Elementary opens"
+   },
+   "source": "문헌2 p.342, 352",
+   "disputed": false
+  },
+  {
+   "year": "1960년대",
+   "text": {
+    "ko": "방화도로(문창로) 개설, 도로 양쪽에 난전이 모임",
+    "en": "Fire road (Munchang-ro) built; street stalls gather"
+   },
+   "source": "문헌2 p.360–361",
+   "disputed": false
+  },
+  {
+   "year": "1967",
+   "text": {
+    "ko": "'문창시장'이라는 이름으로 개설",
+    "en": "Munchang Market officially opens"
+   },
+   "source": "문헌2 p.362, W1, W2",
+   "disputed": false
+  },
+  {
+   "year": "1972",
+   "text": {
+    "ko": "대전 유일의 김장시장(50일)이 뚝방시장에 열림",
+    "en": "Daejeon's only kimchi-season market held here"
+   },
+   "source": "문헌2 p.359",
+   "disputed": true
+  },
+  {
+   "year": "1975",
+   "text": {
+    "ko": "한 떡집이 방앗간을 열고 떡 도매가 시작됨",
+    "en": "Rice-cake wholesale begins"
+   },
+   "source": "문헌2 p.365",
+   "disputed": false
+  },
+  {
+   "year": "1977 / 1978",
+   "text": {
+    "ko": "문창교 붕괴 / 재개통 (p.363은 1977·1982로 다르게 적음)",
+    "en": "Munchang Bridge collapses / reopens"
+   },
+   "source": "문헌2 p.345",
+   "disputed": true
+  },
+  {
+   "year": "1981",
+   "text": {
+    "ko": "문창·석교·옥계동 일대 떡집·방앗간 38곳",
+    "en": "38 rice-cake shops and mills in the area"
+   },
+   "source": "문헌2 p.368, W5",
+   "disputed": false
+  },
+  {
+   "year": "1988 또는 1998",
+   "text": {
+    "ko": "문창1·2동을 다시 문창동으로 통합",
+    "en": "Dong merger"
+   },
+   "source": "문헌1 p.1 / W8",
+   "disputed": true
+  },
+  {
+   "year": "2000년대 초",
+   "text": {
+    "ko": "뷔페·떡 공장 확산으로 동네 방앗간 감소",
+    "en": "Neighborhood mills decline"
+   },
+   "source": "문헌2 p.368",
+   "disputed": false
+  },
+  {
+   "year": "2005",
+   "text": {
+    "ko": "현대식 문창시장 개시",
+    "en": "Modern market opens"
+   },
+   "source": "문헌2 p.362–363",
+   "disputed": false
+  },
+  {
+   "year": "2025",
+   "text": {
+    "ko": "근처 부사동에 대전한화생명볼파크 개장",
+    "en": "Ballpark opens nearby"
+   },
+   "source": "W12",
+   "disputed": false
+  }
+ ],
+ "sources": {
+  "문헌1": "『대전 중구 문창동 역사유래 이야기』, 대전중구문화원, 1997.12.31.",
+  "문헌2": "김효경, 「대전천변에서 이주민과 함께 변화해온 문창동」, 『대전문화』 제30호, 336~371쪽 (발행처·연도 확인 필요)",
+  "W1": "한국관광공사 열린관광",
+  "W2": "대전 중구 문화관광",
+  "W5": "대전시 월간 일류도시대전",
+  "W8": "대전 중구청 문창동 소개",
+  "W12": "위키백과 대전한화생명볼파크"
+ }
+}
