@@ -8,9 +8,11 @@ const toMin=s=>{const[h,m]=s.split(':');return h*60+ +m};
 function nextDeparture(){const n=seoulNow(),d=D.delivery.departures.find(t=>toMin(t)>n.min);const fmt=t=>{const h=+t.split(':')[0];return lang=='en'?(h<12?h+':00 AM':(h-12||12)+':00 PM'):(h<12?'오전 ':'오후 ')+(h>12?h-12:h)+'시'};
  if(lang=='en')return `Now ${n.hm} (Korea time) → next departure: ${d?'today '+fmt(d):'tomorrow '+fmt(D.delivery.departures[0])}. Cut-off time: coming soon.`;
  return `지금 ${n.hm}(한국 시간) → 다음 출발편: ${d?'오늘 '+fmt(d):'내일 '+fmt(D.delivery.departures[0])} (출발편별 접수 마감: 준비 중)`}
-function parkingNow(){const n=seoulNow(),h=D.parking_lot.hours[n.dow],P=D.parking_lot;let open=h&&n.min>=toMin(h[0])&&n.min<toMin(h[1]);
- if(lang=='en')return open?`Now ${n.hm}: ${T(P.name)} is open until ${h[1]} (not checked for public holidays).`:`Now ${n.hm}: ${T(P.name)} is closed. Try ${T(P.alt)}.`;
- return open?`지금 ${n.hm}: ${T(P.name)} 운영 중(~${h[1]}). 공휴일이면 미운영이에요.`:`지금 ${n.hm}: ${T(P.name)}은 운영 시간이 아니에요. ${T(P.alt)}을 이용해 주세요.`}
+function parkingNow(){const n=seoulNow(),P=D.parking_lot,h=P.charge_hours[n.dow],en=lang=='en';
+ if(P.unknown_days.includes(n.dow))return en?`Now ${n.hm}: unattended 24 h, open. Sunday fees: to be confirmed.`:`지금 ${n.hm}: 24시간 무인 운영 중, 일요일·공휴일 요금 부과 여부 확인 필요`;
+ const c=h&&n.min>=toMin(h[0])&&n.min<toMin(h[1]);
+ if(en)return `Now ${n.hm}: unattended 24 h, open. `+(c?`Fees apply now (until ${h[1]}).`:`Outside fee hours — free.`)+` (Public holidays: to be confirmed)`;
+ return `지금 ${n.hm}: 24시간 무인 운영 중, `+(c?`지금은 요금 부과 시간(~${h[1]})`:`지금은 요금 부과 시간 외(무료)`)+` (공휴일이면 확인 필요)`}
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function fmtLine(s){s=s.replace('{{next_departure}}',nextDeparture()).replace('{{parking_now}}',parkingNow());let h=esc(s);
  h=h.replace(/(\+82-42-272-8903|042-272-8903)/g,'<a class="tel" href="tel:+82422728903">$1</a>').replace(/(\+82-2-1330|\b1330\b)/,'<a class="tel" href="tel:1330">$1</a>');
