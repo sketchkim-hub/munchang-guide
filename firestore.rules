@@ -33,7 +33,7 @@ service cloud.firestore {
         && request.resource.data.qty <= 999
         && text('weightId', 20)
         && text('weightLabel', 40)
-        && request.resource.data.service in ['intercity', 'sameday']
+        && request.resource.data['service'] in ['intercity', 'sameday']
         && text('estimateText', 200)
         && text('date', 10)
         && opt('note', 500)

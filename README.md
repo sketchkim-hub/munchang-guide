@@ -8,7 +8,7 @@
 - `?lang=en` 으로 영어 화면 바로 열기, `#parking` 처럼 해시로 특정 메뉴 열기(QR별 시작 화면용).
 
 ## 파일
-index.html · style.css · app.js(로직) · parcel.js(택배 공통) · admin.html · admin.js · firebase-config.js · firestore.rules · data.json(내용) · manifest.json · sw.js(오프라인 캐시, 캐시 이름 `munchang-v7`: 앱 파일을 고치면 번호를 올리기. data.json과 firebase-config.js는 네트워크 우선) · icons/ · shots/(테스트 스크린샷)
+index.html · style.css · app.js(로직) · parcel.js(택배 공통) · admin.html · admin.js · firebase-config.js · firestore.rules · data.json(내용) · manifest.json · sw.js(오프라인 캐시, 캐시 이름 `munchang-v8`: 앱 파일을 고치면 번호를 올리기. data.json과 firebase-config.js는 네트워크 우선) · icons/ · shots/(테스트 스크린샷)
 
 ## data.json 필드
 | 필드 | 설명 |
@@ -58,7 +58,8 @@ index.html · style.css · app.js(로직) · parcel.js(택배 공통) · admin.h
 3. Authentication → Users에서 관리자 계정을 만듭니다. 비밀번호는 저장소에 넣지 마세요.
 4. Firestore Database를 프로덕션 모드로 만듭니다. 위치는 asia-northeast3(서울)을 권합니다.
 5. Firestore → 규칙에 `firestore.rules` 내용을 붙여넣고 **게시**합니다. 규칙을 게시하기 전에 웹 설정을 넣으면 신청서의 개인정보가 공개될 수 있습니다.
-6. 프로젝트 설정 → 웹 앱을 추가하고, 나온 `firebaseConfig`를 `firebase-config.js`의 `window.FIREBASE_CONFIG`에 넣은 뒤 푸시합니다.
-7. GitHub Pages가 갱신되면 `admin.html`에서 3번의 이메일과 비밀번호로 로그인합니다. 안내 저장은 손님 화면에 반영되고, 신청 목록·상태 변경·CSV/엑셀 내려받기가 기기와 상관없이 됩니다.
+6. 웹 앱 설정은 `firebase-config.js`에 프로젝트 `munchang-guide`로 들어가 있습니다. apiKey는 공개값입니다.
+7. Authentication → Settings → Authorized domains에 `sketchkim-hub.github.io`가 있는지 확인합니다. 없으면 로그인 버튼이 GitHub Pages에서 거절됩니다.
+8. 관리자 계정을 만든 뒤 `admin.html`에서 그 이메일과 비밀번호로 로그인합니다. 안내 저장은 손님 화면에 반영되고, 신청 목록·상태 변경·CSV·엑셀 내려받기가 기기와 상관없이 됩니다.
 
-Firebase를 연결하지 않아도 신청 양식, 요금 안내, 카카오톡 복사, 이 브라우저의 관리 화면은 동작합니다.
+`settings/parcel` 문서가 없으면 안내와 요금표는 `data.json`의 기본값을 그대로 보여 줍니다. 손님 신청은 `applications`에 저장되고, 목록은 로그인한 관리자만 봅니다.

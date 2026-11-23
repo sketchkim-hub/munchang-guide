@@ -188,7 +188,9 @@ async function saveApp(app) {
     try {
       await c.fs.setDoc(c.fs.doc(c.db, 'applications', app.id), MParcel.pickApp(app));
       return 'cloud';
-    } catch (e) { /* 규칙 미설정·오프라인이면 이 기기에 남깁니다. */ }
+    } catch (e) {
+      console.error('parcel save', e && e.code, e && e.message);
+    }
   }
   const list = MParcel.loadJSON(MParcel.KEYS.apps, []);
   const apps = Array.isArray(list) ? list : [];
