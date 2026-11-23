@@ -6,10 +6,13 @@
 <body>
 <header><div class="ttl"><b id="appName">문창시장 안내 도우미</b><span class="badge" id="badge">비공식</span></div>
 <div class="langs"><button data-lang="ko" class="on">KO</button><button data-lang="en">EN</button><button data-lang="zh">中文</button><button data-lang="ja">日本語</button></div></header>
-<nav class="tabs"><button id="tabChat" class="on">💬 <span>안내</span></button><button id="tabTl">📜 <span>연표</span></button></nav>
+<nav class="tabs"><button type="button" id="tabChat" class="on">💬 <span>안내</span></button><button type="button" id="tabParcel">📦 <span>택배</span></button><button type="button" id="tabTl">📜 <span>연표</span></button></nav>
 <main id="chat" aria-live="polite"></main>
+<section id="parcel" hidden></section>
 <section id="tl" hidden></section>
 <div id="quick"></div>
 <form id="ask"><input id="q" autocomplete="off" placeholder="궁금한 걸 적어 주세요 (예: 주차)"><button>보내기</button></form>
 <footer id="disc"></footer>
+<script src="firebase-config.js"></script>
+<script src="parcel.js"></script>
 <script src="app.js"></script></body></html>

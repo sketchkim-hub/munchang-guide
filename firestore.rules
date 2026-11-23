@@ -1,0 +1,52 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function text(k, n) {
+      return request.resource.data[k] is string
+        && request.resource.data[k].size() > 0
+        && request.resource.data[k].size() <= n;
+    }
+    function opt(k, n) {
+      return request.resource.data[k] is string
+        && request.resource.data[k].size() <= n;
+    }
+    match /settings/{id} {
+      allow read: if true;
+      allow create, update: if signedIn() && id == 'parcel';
+      allow delete: if false;
+    }
+    match /applications/{id} {
+      allow create: if text('id', 40)
+        && text('createdAt', 40)
+        && text('senderName', 80)
+        && text('senderPhone', 20)
+        && opt('shopName', 80)
+        && text('recipientName', 80)
+        && text('recipientPhone', 20)
+        && text('address', 300)
+        && text('itemType', 120)
+        && request.resource.data.qty is int
+        && request.resource.data.qty >= 1
+        && request.resource.data.qty <= 999
+        && text('weightId', 20)
+        && text('weightLabel', 40)
+        && request.resource.data.service in ['intercity', 'sameday']
+        && text('estimateText', 200)
+        && text('date', 10)
+        && opt('note', 500)
+        && request.resource.data.consent == true
+        && request.resource.data.status == 'received'
+        && text('lang', 8)
+        && request.resource.data.keys().hasOnly([
+          'id', 'createdAt', 'senderName', 'senderPhone', 'shopName',
+          'recipientName', 'recipientPhone', 'address', 'itemType', 'qty',
+          'weightId', 'weightLabel', 'service', 'estimateText', 'date', 'note',
+          'consent', 'status', 'lang'
+        ]);
+      allow read, update, delete: if signedIn();
+    }
+  }
+}

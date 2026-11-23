@@ -8,7 +8,7 @@
 - `?lang=en` 으로 영어 화면 바로 열기, `#parking` 처럼 해시로 특정 메뉴 열기(QR별 시작 화면용).
 
 ## 파일
-index.html · style.css · app.js(로직) · data.json(내용) · manifest.json · sw.js(오프라인 캐시, 캐시 이름 `munchang-v1`: 앱 파일을 고치면 v2로 올리기. data.json은 항상 네트워크 우선) · icons/ · shots/(테스트 스크린샷)
+index.html · style.css · app.js(로직) · parcel.js(택배 공통) · admin.html · admin.js · firebase-config.js · firestore.rules · data.json(내용) · manifest.json · sw.js(오프라인 캐시, 캐시 이름 `munchang-v7`: 앱 파일을 고치면 번호를 올리기. data.json과 firebase-config.js는 네트워크 우선) · icons/ · shots/(테스트 스크린샷)
 
 ## data.json 필드
 | 필드 | 설명 |
@@ -18,7 +18,8 @@ index.html · style.css · app.js(로직) · data.json(내용) · manifest.json 
 | disclaimer | 하단 고정 면책 문구(기획서 11.2), ko / en |
 | parking_lot | '지금 운영 중' 계산용. hours: 요일번호(0=일…6=토) → [시작, 끝]. 없는 요일 = 미운영. alt: 운영 외 안내할 대안 |
 | delivery.departures | 당일 무료배송 출발 시각 ["09:00","13:00"] (Asia/Seoul 기준으로 다음 출발편 계산) |
-| parcel_rates | 택배 요금 [{max_kg, price}] (참고용 데이터; 화면 문구는 items.parcel.answer) |
+| parcel_info | 택배 안내의 기본값. 챗봇·택배 탭·신청 예상 요금이 이 값을 쓰고, 관리 화면에서 고친 내용이 있으면 그 값이 우선합니다. |
+| parcel_rates | 참고용 요금표. 화면은 parcel_info.rates 를 사용합니다. |
 | items[] | 메뉴/주제. id, icon, label{ko,en}, keywords[](입력 문장에 포함되면 매칭, 긴 키워드일수록 우선), answer{ko:[줄…], en:[줄…]}, buttons[](다른 item id 또는 특수값 `timeline`, `map`), quick(true면 하단 빠른 메뉴에 표시) |
 | timeline[] | year, text{ko,en}, source(문헌·쪽/W번호), disputed(true면 '출처 불일치·확인 필요' 표시) |
 | sources | 연표 하단 출처 설명 |
@@ -26,5 +27,38 @@ index.html · style.css · app.js(로직) · data.json(내용) · manifest.json 
 ### 답변 문구 규칙
 - `{{next_departure}}` → 지금 시각 기준 다음 배송 출발편, `{{parking_now}}` → 공영주차장 운영 여부로 자동 치환.
 - 전화번호 042-272-8903 / +82-42-272-8903, 1330 은 자동으로 전화 걸기 링크가 됩니다.
-- "준비 중", "확인 필요", "coming soon", "to be confirmed" 는 자동 강조. 모르는 정보는 지어내지 말고 이 단어로 적기.
+- "준비 중", "확인 필요", "coming soon", "to be confirmed", "관리자 입력 필요", "Admin input needed" 는 자동 강조. 모르는 정보는 지어내지 말고 이 단어로 적기.
 - 점포명·사진은 동의한 점포만. 문헌 속 사진·지도·스캔 원문은 이용 허락 전까지 넣지 않기(기획서 11.3).
+
+## 택배 신청 · 관리
+
+손님은 택배 탭, 빠른 버튼 「택배 신청」, 또는 「택배 신청」「택배 보내기」 같은 말로 신청합니다. 영어는 `?lang=en`.
+
+확인해서 넣어 둔 기본값만 있습니다.
+
+- 시외 택배 접수 마감: 오후 1시
+- 대전 시내 무료 당일배송 출발: 오전 9시, 오후 1시
+- 박스(상자)에 포장된 물품 기준 요금: 2kg 4,000원 / 5kg 5,000원 / 10kg 6,000원 / 15kg 7,000원 / 15kg 초과는 별도 문의
+
+택배사, 박스 규격, 휴무일, 접수 위치, 출발편별 마감, 운송장 연락처, 주의사항은 비어 있으면 「관리자 입력 필요」로 보입니다.
+
+관리 화면은 [admin.html](admin.html) 입니다. 안내 챗봇 하단의 「관리」로도 들어갑니다.
+
+### 왜 저장이 두 갈래인가
+
+이 저장소는 정적 사이트이고 Firebase·점포 계정 같은 백엔드는 원래 없습니다. 신청서에는 이름·전화·주소가 있으므로 GitHub 파일로 저장하지 않습니다.
+
+1. **지금 바로 되는 방법.** 신청 내용을 이 브라우저에 저장하고, 카카오톡·문자로 붙여넣을 수 있게 복사합니다. 시장 주문이 이미 카카오톡으로 들어오기 때문입니다. 관리 화면의 비밀번호는 이 브라우저만 잠그며, 서버가 확인하지 않아서 개발자 도구로 우회할 수 있습니다. 안내 수정과 신청 목록은 그 브라우저에만 있습니다.
+2. **모든 손님·모든 관리 기기에 반영하려면 Firebase.** 아래 순서를 끝낸 뒤에만 연결하세요. `firebase-config.js`의 apiKey는 웹에 공개되는 값이고 비밀번호가 아닙니다. 비밀번호는 Authentication 사용자로만 만듭니다.
+
+### Firebase 설정
+
+1. [Firebase 콘솔](https://console.firebase.google.com)에서 프로젝트를 만듭니다.
+2. Authentication → Sign-in method에서 이메일/비밀번호를 켭니다.
+3. Authentication → Users에서 관리자 계정을 만듭니다. 비밀번호는 저장소에 넣지 마세요.
+4. Firestore Database를 프로덕션 모드로 만듭니다. 위치는 asia-northeast3(서울)을 권합니다.
+5. Firestore → 규칙에 `firestore.rules` 내용을 붙여넣고 **게시**합니다. 규칙을 게시하기 전에 웹 설정을 넣으면 신청서의 개인정보가 공개될 수 있습니다.
+6. 프로젝트 설정 → 웹 앱을 추가하고, 나온 `firebaseConfig`를 `firebase-config.js`의 `window.FIREBASE_CONFIG`에 넣은 뒤 푸시합니다.
+7. GitHub Pages가 갱신되면 `admin.html`에서 3번의 이메일과 비밀번호로 로그인합니다. 안내 저장은 손님 화면에 반영되고, 신청 목록·상태 변경·CSV/엑셀 내려받기가 기기와 상관없이 됩니다.
+
+Firebase를 연결하지 않아도 신청 양식, 요금 안내, 카카오톡 복사, 이 브라우저의 관리 화면은 동작합니다.
