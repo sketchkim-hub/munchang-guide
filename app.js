@@ -129,10 +129,7 @@ function formHTML() {
       <label class="fld">${esc(MParcel.t(lang, 'qty'))}<input name="qty" type="number" min="1" max="999" inputmode="numeric" value="1"></label>
       <label class="fld">${esc(MParcel.t(lang, 'weight'))}<select name="weight"><option value="">${en ? 'Select' : '선택'}</option>${weights}</select></label>
     </div>
-    <fieldset><legend>${esc(MParcel.t(lang, 'service'))}</legend>
-      <label class="check"><input type="radio" name="service" value="intercity" checked> ${esc(MParcel.t(lang, 'intercity'))}</label>
-      <label class="check"><input type="radio" name="service" value="sameday"> ${esc(MParcel.t(lang, 'sameday'))}</label>
-    </fieldset>
+    <input type="hidden" name="service" value="intercity">
     <label class="fld">${esc(MParcel.t(lang, 'date'))}<input name="date" type="date" min="${today}"></label>
     <label class="fld">${esc(MParcel.t(lang, 'note'))}<textarea name="note" maxlength="500" rows="2" placeholder="${esc(MParcel.t(lang, 'notePh'))}"></textarea></label>
     <p id="estimate" class="est">${esc(MParcel.t(lang, 'estimate'))}: —</p>

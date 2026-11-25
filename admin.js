@@ -27,10 +27,8 @@ const A = {
     save: '안내 저장', savedLocal: '이 브라우저 안내 화면에 반영했습니다. 다른 손님 화면에는 아직 없습니다.',
     savedCloud: '저장했습니다. 열려 있는 안내 화면에도 곧 반영됩니다.',
     saveFail: '저장하지 못했습니다.',
-    notice: '공지', ko: '한국어', en: '영어',
-    cutoff: '시외 택배 접수 마감', deps: '대전 시내 당일배송 출발', addDep: '출발 시각 추가',
-    free: '대전 시내 당일배송은 무료', freeHelp: '체크를 끄면 당일배송도 아래 요금표를 씁니다. 제목의 ‘무료’ 문구도 함께 고치세요.',
-    sdTitle: '당일배송 제목', sdCut: '출발편별 접수 마감 (모르면 비움)',
+    notice: '공지',
+    cutoff: '시외 택배 접수 마감',
     rates: '시외 택배 요금', addRate: '구간 추가', kg: 'kg까지', won: '원',
     overKg: '이 무게 초과', overLabel: '초과 시 문구', cond: '박스 포장 조건',
     box: '박스 규격', hol: '휴무일', car: '택배사', drop: '접수 위치', trk: '운송장·문의', cau: '주의사항',
@@ -68,10 +66,8 @@ const A = {
     save: 'Save guide', savedLocal: 'Updated on this browser only. Other visitors do not see it yet.',
     savedCloud: 'Saved. Open guide pages will update shortly.',
     saveFail: 'Could not save.',
-    notice: 'Notice', ko: 'Korean', en: 'English',
-    cutoff: 'Out-of-town cut-off', deps: 'Same-day departures', addDep: 'Add departure',
-    free: 'Same-day delivery inside Daejeon is free', freeHelp: 'If you uncheck this, same-day uses the rate table. Edit the title so it does not still say free.',
-    sdTitle: 'Same-day title', sdCut: 'Per-departure cut-off (leave blank if unknown)',
+    notice: 'Notice',
+    cutoff: 'Out-of-town cut-off',
     rates: 'Out-of-town rates', addRate: 'Add band', kg: 'up to kg', won: 'won',
     overKg: 'Over this weight', overLabel: 'Text when over', cond: 'Box-packing condition',
     box: 'Box size', hol: 'Closed days', car: 'Courier', drop: 'Drop-off', trk: 'Tracking & contact', cau: 'Please note',
@@ -95,8 +91,11 @@ function area(id, label, value) {
 function line(id, label, value, type) {
   return `<label class="fld">${esc(label)}<input id="${id}" type="${type || 'text'}" value="${esc(value || '')}"></label>`;
 }
-function bi(id, label, pair) {
-  return `<div class="block"><p class="leg">${esc(label)}</p><div class="row2">${area(id + 'Ko', t('ko'), pair && pair.ko)}${area(id + 'En', t('en'), pair && pair.en)}</div></div>`;
+function keepPair(id, prev) {
+  return { ko: val(id + 'Ko'), en: prev && typeof prev.en === 'string' ? prev.en : '' };
+}
+function koArea(id, label, value) {
+  return area(id + 'Ko', label, value);
 }
 async function sha(salt, password) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + ':' + password));
@@ -140,35 +139,25 @@ function rateRow(r) {
     <label class="fld">${esc(t('won'))}<input data-price type="number" min="0" step="100" value="${price}"></label>
     <button type="button" data-del-rate>${esc(t('del'))}</button></div>`;
 }
-function depRow(time) {
-  return `<div class="dep-row"><input data-dep type="time" value="${esc(time)}"><button type="button" data-del-dep>${esc(t('del'))}</button></div>`;
-}
 function settingsHTML() {
   const S = P;
   return `<form id="settingsForm">
     <p class="banner">${esc(fb && user ? t('warnOn') : t('off'))}</p>
     <p class="s">${esc(t('need'))}</p>
-    ${bi('notice', t('notice'), S.notice)}
+    ${koArea('notice', t('notice'), S.notice && S.notice.ko)}
     <label class="fld">${esc(t('cutoff'))}<input id="cutoff" type="time" value="${esc(S.cutoff.time)}"></label>
-    <fieldset><legend>${esc(t('deps'))}</legend><div id="deps">${S.same_day.departures.map(depRow).join('')}</div>
-      <button type="button" id="addDep">${esc(t('addDep'))}</button></fieldset>
-    <label class="check"><input id="sameFree" type="checkbox" ${S.same_day.free !== false ? 'checked' : ''}> ${esc(t('free'))}</label>
-    <p class="s">${esc(t('freeHelp'))}</p>
-    ${bi('sdTitle', t('sdTitle'), S.same_day.title)}
-    ${bi('sdCut', t('sdCut'), S.same_day.cutoff_note)}
     <fieldset><legend>${esc(t('rates'))}</legend><div id="rates">${S.rates.map(rateRow).join('')}</div>
       <button type="button" id="addRate">${esc(t('addRate'))}</button>
-      <div class="row2">${line('overKg', t('overKg'), S.over_kg, 'number')}${area('overKo', t('overLabel') + ' · ' + t('ko'), S.over_label.ko)}</div>
-      ${area('overEn', t('overLabel') + ' · ' + t('en'), S.over_label.en)}
-      ${bi('cond', t('cond'), S.rate_condition)}
+      <div class="row2">${line('overKg', t('overKg'), S.over_kg, 'number')}${area('overKo', t('overLabel'), S.over_label.ko)}</div>
+      ${koArea('cond', t('cond'), S.rate_condition && S.rate_condition.ko)}
     </fieldset>
-    ${bi('box', t('box'), S.box_spec)}
-    ${bi('hol', t('hol'), S.holidays)}
-    ${bi('car', t('car'), S.carrier)}
-    ${bi('drop', t('drop'), S.dropoff)}
-    ${bi('trk', t('trk'), S.tracking)}
+    ${koArea('box', t('box'), S.box_spec && S.box_spec.ko)}
+    ${koArea('hol', t('hol'), S.holidays && S.holidays.ko)}
+    ${koArea('car', t('car'), S.carrier && S.carrier.ko)}
+    ${koArea('drop', t('drop'), S.dropoff && S.dropoff.ko)}
+    ${koArea('trk', t('trk'), S.tracking && S.tracking.ko)}
     ${line('deskPhone', t('phone'), S.contact_phone, 'tel')}
-    ${bi('cau', t('cau'), S.cautions)}
+    ${koArea('cau', t('cau'), S.cautions && S.cautions.ko)}
     ${line('kakao', t('kakao'), S.kakao_url, 'url')}
     <label class="fld">${esc(t('shops'))}<textarea id="shops" rows="4">${esc((S.shops || []).join('\n'))}</textarea></label>
     <p class="s">${esc(t('shopsHelp'))}</p>
@@ -240,35 +229,31 @@ function renderApps() {
   if (h) h.textContent = t('apps') + ' (' + list.length + ')';
 }
 function collect() {
-  const deps = [...document.querySelectorAll('[data-dep]')].map(i => i.value).filter(v => /^\d{2}:\d{2}$/.test(v));
   const rates = [...document.querySelectorAll('.rate-row')].map(row => ({
     max_kg: Number(row.querySelector('[data-kg]').value),
     price: Number(row.querySelector('[data-price]').value)
   }));
-  return MParcel.merge(base, {
-    notice: { ko: val('noticeKo'), en: val('noticeEn') },
+  const over = {
+    notice: keepPair('notice', P && P.notice),
     cutoff: { time: val('cutoff') },
-    same_day: {
-      departures: deps,
-      free: $('#sameFree').checked,
-      title: { ko: val('sdTitleKo'), en: val('sdTitleEn') },
-      cutoff_note: { ko: val('sdCutKo'), en: val('sdCutEn') }
-    },
     rates,
     over_kg: Number(val('overKg')),
-    over_label: { ko: val('overKo'), en: val('overEn') },
-    rate_condition: { ko: val('condKo'), en: val('condEn') },
-    box_spec: { ko: val('boxKo'), en: val('boxEn') },
-    holidays: { ko: val('holKo'), en: val('holEn') },
-    carrier: { ko: val('carKo'), en: val('carEn') },
-    dropoff: { ko: val('dropKo'), en: val('dropEn') },
-    tracking: { ko: val('trkKo'), en: val('trkEn') },
+    over_label: keepPair('over', P && P.over_label),
+    rate_condition: keepPair('cond', P && P.rate_condition),
+    box_spec: keepPair('box', P && P.box_spec),
+    holidays: keepPair('hol', P && P.holidays),
+    carrier: keepPair('car', P && P.carrier),
+    dropoff: keepPair('drop', P && P.dropoff),
+    tracking: keepPair('trk', P && P.tracking),
     contact_phone: val('deskPhone'),
-    cautions: { ko: val('cauKo'), en: val('cauEn') },
+    cautions: keepPair('cau', P && P.cautions),
     kakao_url: val('kakao'),
     shops: val('shops').split(/\n/).map(s => s.trim()).filter(Boolean),
     updatedAt: new Date().toISOString()
-  });
+  };
+  const kept = MParcel.inheritedSameDay(P && P.same_day);
+  if (kept) over.same_day = kept;
+  return MParcel.merge(base, over);
 }
 async function saveSettings() {
   const msg = document.getElementById('saveMsg');
@@ -398,11 +383,6 @@ document.addEventListener('click', async e => {
     return;
   }
   if (e.target.id === 'logout') { doLogout(); return; }
-  if (e.target.id === 'addDep') {
-    const box = document.getElementById('deps');
-    if (box) box.insertAdjacentHTML('beforeend', depRow('09:00'));
-    return;
-  }
   if (e.target.id === 'addRate') {
     const box = document.getElementById('rates');
     if (box) box.insertAdjacentHTML('beforeend', rateRow({ max_kg: '', price: '' }));

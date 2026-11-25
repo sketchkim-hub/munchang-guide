@@ -61,13 +61,6 @@
    0
   ]
  },
- "delivery": {
-  "departures": [
-   "09:00",
-   "13:00"
-  ],
-  "timezone": "Asia/Seoul"
- },
  "parcel_info": {
   "notice": {
    "ko": "",
@@ -75,21 +68,6 @@
   },
   "cutoff": {
    "time": "13:00"
-  },
-  "same_day": {
-   "departures": [
-    "09:00",
-    "13:00"
-   ],
-   "free": true,
-   "title": {
-    "ko": "대전 시내 무료 당일배송",
-    "en": "Free same-day delivery within Daejeon"
-   },
-   "cutoff_note": {
-    "ko": "",
-    "en": ""
-   }
   },
   "rates": [
    {
@@ -490,19 +468,17 @@
    ],
    "answer": {
     "ko": [
-     "택배 접수·대전 시내 무료 당일배송 📦",
-     "🚚 대전 시내 무료 당일배송 — 출발 오전 9시 · 오후 1시\n{{next_departure}}",
+     "택배 접수 안내 📦",
      "⏰ 시외 택배 접수 마감: 오후 1시",
      "📦 시외 택배 요금 (박스(상자)에 포장된 물품 기준)\n  2kg까지 4,000원\n  5kg까지 5,000원\n  10kg까지 6,000원\n  15kg까지 7,000원\n  15kg 초과: 별도 문의",
-     "택배사 · 박스 규격 · 휴무일 · 접수 위치 · 출발편별 접수 마감 · 운송장 문의 · 주의사항: 관리자 입력 필요",
+     "택배사 · 박스 규격 · 휴무일 · 접수 위치 · 운송장 문의 · 주의사항: 관리자 입력 필요",
      "문의: 상인회 042-272-8903"
     ],
     "en": [
-     "Parcel drop-off and free same-day delivery in Daejeon 📦",
-     "🚚 Free same-day delivery within Daejeon — departures 9:00 AM and 1:00 PM\n{{next_departure}}",
+     "Parcel drop-off 📦",
      "⏰ Out-of-town parcel cut-off: 1:00 PM",
      "📦 Out-of-town rates (for items packed in a box)\n  Up to 2 kg ₩4,000\n  Up to 5 kg ₩5,000\n  Up to 10 kg ₩6,000\n  Up to 15 kg ₩7,000\n  Over 15 kg: Ask us",
-     "Courier, box size, closed days, drop-off, per-departure cut-off, tracking contact, cautions: Admin input needed",
+     "Courier, box size, closed days, drop-off, tracking contact, cautions: Admin input needed",
      "Phone: merchants' association +82-42-272-8903"
     ]
    },
