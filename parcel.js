@@ -29,7 +29,7 @@
       date: '희망일', note: '요청사항', notePh: '없으면 비워 두세요',
       consent: '개인정보 수집·이용에 동의합니다 (필수). 수집 항목은 보내는·받는 사람의 이름, 연락처, 주소, 점포명, 물품 정보입니다. 목적은 택배 접수와 배송 연락입니다. Firebase를 연결하면 관리자 로그인으로만 목록을 봅니다. 연결하지 않으면 이 기기에만 저장되고, 카카오톡·문자로 보낸 내용은 그 앱에 남습니다.',
       submit: '신청 내용 저장', estimate: '예상 요금',
-      boxFeeNote: '예상 요금은 박스(상자)에 포장된 물품·시외 택배 기준입니다. 대전 시내 당일배송은 무료입니다.',
+      boxFeeNote: '예상 요금은 박스(상자)에 포장된 물품·시외 택배 기준입니다.',
       resultTitle: '신청 내용을 정리했습니다.',
       resultCloud: '관리 화면(Firebase)에 저장했습니다. 시장 접수는 카카오톡으로도 들어오니, 아래 내용을 함께 보내 두면 확인이 빠릅니다.',
       resultLocal: '이 브라우저의 관리 화면에 저장했습니다. 다른 기기에는 보이지 않습니다. 아래 내용을 카카오톡이나 문자로 보내 주세요.',
@@ -48,7 +48,7 @@
       weightCol: '무게', feeCol: '요금', upTo: '까지', over: '초과',
       nowNext: '다음 출발편', closed: '휴무일', carrier: '택배사', boxSpec: '박스 규격',
       dropoff: '접수 위치', tracking: '운송장·문의', caution: '주의사항', perCut: '출발편별 접수 마감',
-      lead: '택배 접수와 대전 시내 당일배송 안내입니다.',
+      lead: '택배 접수 안내입니다.',
       outCut: '시외 택배 접수 마감', dep: '출발',
       rateTitle: '시외 택배 요금',
       askLine: '관리자에게 문의',
@@ -66,7 +66,7 @@
       date: 'Date wanted', note: 'Note', notePh: 'Optional',
       consent: 'I agree to the collection of personal information (required). We collect the sender and recipient name, phone, address, shop name, and item details to receive the parcel and contact you about delivery. With Firebase, only a signed-in admin can open the list. Without it, the list stays on this device, and anything you send in KakaoTalk or SMS stays in that app.',
       submit: 'Save request', estimate: 'Estimated fee',
-      boxFeeNote: 'The estimate is for items packed in a box, on the out-of-town rate. Same-day delivery inside Daejeon is free.',
+      boxFeeNote: 'The estimate is for items packed in a box, on the out-of-town rate.',
       resultTitle: 'Your request is ready.',
       resultCloud: 'Saved for the admin (Firebase). Market requests also come in by KakaoTalk, so send the text below as well.',
       resultLocal: 'Saved in the admin screen on this browser only. It will not appear on another phone. Send the text below by KakaoTalk or SMS.',
@@ -85,7 +85,7 @@
       weightCol: 'Weight', feeCol: 'Fee', upTo: 'Up to', over: 'Over',
       nowNext: 'Next departure', closed: 'Closed days', carrier: 'Courier', boxSpec: 'Box size',
       dropoff: 'Drop-off', tracking: 'Tracking & contact', caution: 'Please note', perCut: 'Cut-off for each departure',
-      lead: 'Parcel drop-off and same-day delivery in Daejeon.',
+      lead: 'This is the parcel drop-off guide.',
       outCut: 'Out-of-town parcel cut-off', dep: 'Departures',
       rateTitle: 'Out-of-town rates',
       askLine: 'Please ask us',
@@ -129,16 +129,41 @@
       en: typeof o.en === 'string' ? o.en : (base ? base.en : '')
     };
   }
+  function loc(pairObj, lang) {
+    const o = pairObj && typeof pairObj === 'object' ? pairObj : {};
+    if (lang === 'en') {
+      const en = (o.en || '').trim();
+      if (en) return en;
+    }
+    return (o.ko || '').trim();
+  }
+  function emptySameDay() {
+    return { departures: [], free: false, title: { ko: '', en: '' }, cutoff_note: { ko: '', en: '' } };
+  }
+  function inheritedSameDay(src) {
+    if (!src || typeof src !== 'object') return null;
+    const departures = Array.isArray(src.departures) ? src.departures.filter(tm => /^\d{2}:\d{2}$/.test(tm)) : [];
+    const title = pair(src.title, { ko: '', en: '' });
+    const cutoff_note = pair(src.cutoff_note, { ko: '', en: '' });
+    const hasText = [title.ko, title.en, cutoff_note.ko, cutoff_note.en].some(s => (s || "").trim());
+    if (!departures.length && !hasText && src.free !== true) return null;
+    return {
+      departures,
+      free: src.free === false ? false : true,
+      title,
+      cutoff_note
+    };
+  }
   function fillConfirmed(p) {
     if (!(p.rate_condition.ko || '').trim()) p.rate_condition.ko = '박스(상자)에 포장된 물품 기준';
     if (!(p.rate_condition.en || '').trim()) p.rate_condition.en = 'For items packed in a box';
     if (!(p.over_label.ko || '').trim()) p.over_label.ko = '별도 문의';
     if (!(p.over_label.en || '').trim()) p.over_label.en = 'Ask us';
+    if (!p.same_day || typeof p.same_day !== 'object') p.same_day = emptySameDay();
+    if (!Array.isArray(p.same_day.departures)) p.same_day.departures = [];
     if (!p.same_day.title) p.same_day.title = { ko: '', en: '' };
-    if (!(p.same_day.title.ko || '').trim()) p.same_day.title.ko = '대전 시내 무료 당일배송';
-    if (!(p.same_day.title.en || '').trim()) p.same_day.title.en = 'Free same-day delivery within Daejeon';
+    if (!p.same_day.cutoff_note) p.same_day.cutoff_note = { ko: '', en: '' };
     if (!/^\d{2}:\d{2}$/.test(p.cutoff.time || '')) p.cutoff.time = '13:00';
-    if (!p.same_day.departures.length) p.same_day.departures = ['09:00', '13:00'];
     if (!p.rates.length) p.rates = DEFAULT_RATES.map(r => ({ ...r }));
     if (!(Number(p.over_kg) > 0)) p.over_kg = 15;
     return p;
@@ -147,7 +172,7 @@
     return fillConfirmed({
       notice: { ko: '', en: '' },
       cutoff: { time: '13:00' },
-      same_day: { departures: ['09:00', '13:00'], free: true, title: { ko: '', en: '' }, cutoff_note: { ko: '', en: '' } },
+      same_day: emptySameDay(),
       rates: DEFAULT_RATES.map(r => ({ ...r })),
       over_kg: 15,
       over_label: { ko: '별도 문의', en: 'Ask us' },
@@ -169,12 +194,7 @@
     const p = {
       notice: pair(over && over.notice, b.notice),
       cutoff: { time: b.cutoff && b.cutoff.time ? b.cutoff.time : '13:00' },
-      same_day: {
-        departures: (b.same_day && b.same_day.departures ? b.same_day.departures.slice() : ['09:00', '13:00']),
-        free: b.same_day && b.same_day.free === false ? false : true,
-        title: pair(b.same_day && b.same_day.title, { ko: '', en: '' }),
-        cutoff_note: pair(b.same_day && b.same_day.cutoff_note, { ko: '', en: '' })
-      },
+      same_day: inheritedSameDay(b.same_day) || emptySameDay(),
       rates: (b.rates || []).map(r => ({ max_kg: Number(r.max_kg), price: Number(r.price) })),
       over_kg: Number(b.over_kg) || 15,
       over_label: pair(b.over_label, { ko: '별도 문의', en: 'Ask us' }),
@@ -193,15 +213,8 @@
     if (over && typeof over === 'object') {
       if (over.notice) p.notice = pair(over.notice, p.notice);
       if (over.cutoff && /^\d{2}:\d{2}$/.test(over.cutoff.time || '')) p.cutoff.time = over.cutoff.time;
-      if (over.same_day && typeof over.same_day === 'object') {
-        if (Array.isArray(over.same_day.departures)) {
-          const ds = over.same_day.departures.filter(t => /^\d{2}:\d{2}$/.test(t));
-          if (ds.length) p.same_day.departures = ds;
-        }
-        if (typeof over.same_day.free === 'boolean') p.same_day.free = over.same_day.free;
-        if (over.same_day.title) p.same_day.title = pair(over.same_day.title, p.same_day.title);
-        if (over.same_day.cutoff_note) p.same_day.cutoff_note = pair(over.same_day.cutoff_note, p.same_day.cutoff_note);
-      }
+      const overSame = inheritedSameDay(over.same_day);
+      if (overSame) p.same_day = overSame;
       if (Array.isArray(over.rates)) {
         const rates = over.rates.map(r => ({ max_kg: Number(r.max_kg), price: Number(r.price) }))
           .filter(r => r.max_kg > 0 && r.max_kg < 1000 && r.price >= 0 && r.price < 10000000);
@@ -231,12 +244,12 @@
   }
   function estimate(settings, service, weightId, lang) {
     const en = lang === 'en';
-    const cond = (settings.rate_condition[en ? 'en' : 'ko'] || '').trim();
-    if (service === 'sameday' && settings.same_day.free !== false) {
+    const cond = loc(settings.rate_condition, lang);
+    if (service === 'sameday' && settings.same_day && settings.same_day.free !== false) {
       return { kind: 'free', price: 0, text: en ? 'Free (same-day delivery within Daejeon)' : '무료 (대전 시내 당일배송)' };
     }
     if (weightId === 'over') {
-      const label = (settings.over_label[en ? 'en' : 'ko'] || '').trim() || (en ? 'Ask us' : '별도 문의');
+      const label = loc(settings.over_label, lang) || (en ? 'Ask us' : '별도 문의');
       const text = en
         ? label + ' (over ' + settings.over_kg + ' kg' + (cond ? ', ' + cond : '') + ')'
         : label + ' (' + settings.over_kg + 'kg 초과' + (cond ? ', ' + cond : '') + ')';
@@ -250,8 +263,9 @@
     return { kind: 'priced', price: row.price, text };
   }
   function nextDepartureLine(settings, lang, now) {
+    const deps = settings && settings.same_day && Array.isArray(settings.same_day.departures) ? settings.same_day.departures : [];
+    if (!deps.length || !now) return '';
     const en = lang === 'en';
-    const deps = settings.same_day.departures;
     const d = deps.find(tm => toMin(tm) > now.min);
     const when = d ? (en ? 'today ' : '오늘 ') + clock(d, en ? 'en' : 'ko') : (en ? 'tomorrow ' : '내일 ') + clock(deps[0], en ? 'en' : 'ko');
     if (en) return 'Now ' + now.hm + ' (Korea time) → next departure: ' + when + '.';
@@ -264,7 +278,9 @@
     if (!dateStr || dateStr !== todayKey(now)) return '';
     if (service === 'intercity' && now.min >= toMin(settings.cutoff.time)) return t(lang, 'cutoffPast');
     if (service === 'sameday') {
-      const last = settings.same_day.departures.map(toMin).sort((a, b) => a - b).pop();
+      const deps = settings.same_day && Array.isArray(settings.same_day.departures) ? settings.same_day.departures : [];
+      if (!deps.length) return '';
+      const last = deps.map(toMin).sort((a, b) => a - b).pop();
       if (now.min >= last) return t(lang, 'departPast');
     }
     return '';
@@ -286,7 +302,7 @@
     need('itemType', short(input.itemType) && short(input.itemType).length <= 120);
     const qty = Number(input.qty);
     need('qty', Number.isInteger(qty) && qty >= 1 && qty <= 999);
-    need('service', input.service === 'intercity' || input.service === 'sameday');
+    need('service', input.service === 'intercity');
     need('weightId', !!short(input.weightId));
     need('date', /^\d{4}-\d{2}-\d{2}$/.test(short(input.date)));
     need('consent', input.consent === true);
@@ -332,7 +348,7 @@
       (en ? 'Boxes: ' : '수량·박스 수: ') + app.qty,
       (en ? 'Weight: ' : '무게: ') + app.weightLabel,
       (en ? 'Estimate: ' : '예상 요금: ') + app.estimateText,
-      (en ? 'Packing: ' : '포장 조건: ') + (settings.rate_condition[en ? 'en' : 'ko'] || ''),
+      (en ? 'Packing: ' : '포장 조건: ') + loc(settings.rate_condition, lang),
       (en ? 'Date wanted: ' : '희망일: ') + app.date,
       (en ? 'Note: ' : '요청사항: ') + (app.note || '-')
     ];
@@ -359,14 +375,14 @@
   }
   function rateTableHTML(S, lang) {
     const en = lang === 'en';
-    const cond = esc(S.rate_condition[en ? 'en' : 'ko']);
+    const cond = esc(loc(S.rate_condition, lang));
     const title = esc(t(lang, 'rateTitle'));
     let rows = S.rates.map(r => {
       const w = en ? 'Up to ' + r.max_kg + ' kg' : r.max_kg + 'kg까지';
       return '<tr><td>' + esc(w) + '</td><td>' + esc(won(r.price, en ? 'en' : 'ko')) + '</td></tr>';
     }).join('');
     const ow = en ? 'Over ' + S.over_kg + ' kg' : S.over_kg + 'kg 초과';
-    rows += '<tr><td>' + esc(ow) + '</td><td>' + esc(S.over_label[en ? 'en' : 'ko']) + '</td></tr>';
+    rows += '<tr><td>' + esc(ow) + '</td><td>' + esc(loc(S.over_label, lang)) + '</td></tr>';
     return '<table class="rates"><caption><b>' + title + '</b><span class="cond">' + cond + '</span></caption><thead><tr><th>' +
       esc(t(lang, 'weightCol')) + '</th><th>' + esc(t(lang, 'feeCol')) + '</th></tr></thead><tbody>' + rows + '</tbody></table>';
   }
@@ -378,23 +394,18 @@
     if (lang === 'zh' || lang === 'ja') {
       h += '<p class="pending">' + (lang === 'zh' ? '中文版本：准备中' : '日本語版：準備中') + '</p>';
     }
-    const notice = (S.notice[L] || '').trim();
+    const notice = loc(S.notice, lang);
     if (notice) h += '<p class="warn">' + esc(notice) + '</p>';
     h += '<p>' + esc(t(lang, 'lead')) + '</p>';
-    const title = (S.same_day.title && S.same_day.title[L]) || (en ? 'Free same-day delivery within Daejeon' : '대전 시내 무료 당일배송');
-    h += '<p><b>' + esc(title) + '</b>\n' + esc(t(lang, 'dep')) + ': ' +
-      S.same_day.departures.map(tm => esc(clock(tm, L))).join(' · ') + '\n' + esc(nextDepartureLine(S, lang, now)) + '</p>';
-    const per = (S.same_day.cutoff_note[L] || '').trim();
-    h += '<p><b>' + esc(t(lang, 'perCut')) + '</b>\n' + (per ? esc(per) : '<span class="pending">' + esc(PH[L]) + '</span>') + '</p>';
     h += '<p><b>' + esc(t(lang, 'outCut')) + '</b>\n' + esc(clock(S.cutoff.time, L)) + '</p>';
     h += rateTableHTML(S, lang);
     const extras = [
-      [t(lang, 'boxSpec'), S.box_spec[L]],
-      [t(lang, 'carrier'), S.carrier[L]],
-      [t(lang, 'dropoff'), S.dropoff[L]],
-      [t(lang, 'closed'), S.holidays[L]],
-      [t(lang, 'tracking'), S.tracking[L]],
-      [t(lang, 'caution'), S.cautions[L]]
+      [t(lang, 'boxSpec'), loc(S.box_spec, lang)],
+      [t(lang, 'carrier'), loc(S.carrier, lang)],
+      [t(lang, 'dropoff'), loc(S.dropoff, lang)],
+      [t(lang, 'closed'), loc(S.holidays, lang)],
+      [t(lang, 'tracking'), loc(S.tracking, lang)],
+      [t(lang, 'caution'), loc(S.cautions, lang)]
     ];
     const missing = [];
     extras.forEach(([label, val]) => {
@@ -470,7 +481,7 @@
   }
 
   root.MParcel = {
-    PH, KEYS, APP_FIELDS, STATUS, DEFAULT_RATES, t, esc, toMin, clock, won, blank, merge, fillConfirmed,
+    PH, KEYS, APP_FIELDS, STATUS, DEFAULT_RATES, t, esc, toMin, clock, won, blank, merge, fillConfirmed, inheritedSameDay, loc,
     weightLabel, estimate, nextDepartureLine, cutoffWarning, todayKey, phoneOk, validate, seoulStamp, newId,
     serviceLabel, statusLabel, requestText, pickApp, guideHTML, rateTableHTML, toCSV, toXLS, loadJSON, saveJSON,
     allowSubmit, firebaseReady
